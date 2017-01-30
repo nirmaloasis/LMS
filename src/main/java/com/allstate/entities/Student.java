@@ -20,6 +20,14 @@ public class Student {
     private Date created;
     private Date modified;
 
+    public Student(String email) {
+        this.email = email;
+    }
+
+    public Student() {
+
+    }
+
     @Id
     @GeneratedValue
     public int getId() {

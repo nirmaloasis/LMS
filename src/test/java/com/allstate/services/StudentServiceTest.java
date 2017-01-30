@@ -15,6 +15,7 @@ import static org.junit.Assert.*;
 @SpringBootTest
 @Sql(value={"/sql/seed.sql"})
 public class StudentServiceTest {
+
     @Autowired
     private StudentService service;
 
@@ -30,10 +31,38 @@ public class StudentServiceTest {
 
     @Test
     public void create_createsStudentRecord() throws Exception{
-        Student lmsEntity = new Student();
-        lmsEntity.setEmail("dcaaf@gmail.com");
+        Student lmsEntity = new Student("ddd@gmail.com");
+
         Student result = this.service.create(lmsEntity);
 
         assertEquals(3,result.getId());
+    }
+
+    @Test
+    public void findById_returnsStudentRecordByFindingId() throws Exception {
+        Student result = this.service.findById(1);
+        assertEquals("abc@gmail.com",result.getEmail());
+
+    }
+
+    @Test
+    public void findById_noRecordFoundThrowsException() throws Exception {
+        Student result = this.service.findById(4);
+        assertNull(result);
+
+    }
+
+    @Test
+    public void findByEmail_returnsStudentRecordByEmail() throws Exception {
+        Student result = this.service.findByEmail("abc@gmail.com");
+        assertEquals(1,result.getId());
+
+    }
+
+    @Test
+    public void findByEmail_noRecordFoundByEmail() throws Exception {
+        Student result = this.service.findByEmail("ijnjc@gmail.com");
+        assertNull(result);
+
     }
 }
